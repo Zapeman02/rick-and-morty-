@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rick and Morty Character Compass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #characters-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 12px;
+            border-radius: 4px;
+            background-color: white;
+            width: 240px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        img.character-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .attribute {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .character-detail {
+            margin: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rick and Morty Character Compass</h1>
+    <div id="characters-container"></div>
+
+    <script>
+        const charactersContainer = document.getElementById("characters-container");
+
+        fetch('https://rickandmortyapi.com/api/character')
+            .then(response => response.json())
+            .then(data => {
+                data.results.forEach(character => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <img src="${character.image}" alt="${character.name}" class="character-image">
+                        <p class="character-detail"><span class="attribute">Name:</span> ${character.name}</p>
+                        <p class="character-detail"><span class="attribute">Status:</span> ${character.status}</p>
+                        <p class="character-detail"><span class="attribute">Species:</span> ${character.species}</p>
+                    `;
+                    charactersContainer.appendChild(card);
+                })
+            });
+    </script>
+</body>
+</html>
